@@ -2,16 +2,16 @@
   type: map
   contents:
     - name: Full Name
-      value: Albert Einstein
-    - name: Date of Birth
-      value: 14th March 1879
+      value: Mohammad Jasim Usmani
+    - name: Location
+      value: Canada
     - name: Languages
-      value: English, German
+      value: English, Hindi, Urdu, Arabic
 
 - title: Education
   type: time_table
   contents:
-    - title: PhD
+    - title: MASc
       institution: University of Zurich, Zurich, Switzerland
       year: 1905
       description:
