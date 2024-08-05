@@ -14,8 +14,8 @@
     "profiles": [
       {
         "network": "Twitter",
-        "username": "AlbertEinstein",
-        "url": "https://twitter.com/AlbertEinstein"
+        "username": "jasimusmani",
+        "url": "https://twitter.com/jasimusmani"
       }
     ]
   },
@@ -94,16 +94,30 @@
 
   "skills": [
     {
-      "name": "Physics",
+      "name": "Programming Languages",
       "level": "Master",
       "icon": "fa-solid fa-hashtag",
       "keywords": [
-        "Quantum Mechanics",
-        "Quantum Computing",
-        "Quantum Information",
-        "Quantum Cryptography",
-        "Quantum Communication",
-        "Quantum Teleportation"
+        "Python, C++, SQL"
+      ]
+    },
+    {
+      "name": "AI frameworks and Libraries",
+      "level": "Master",
+      "icon": "fa-solid fa-hashtag",
+      "keywords": [
+        "PyTorch, TensorFlow, Keras",
+        "NumPy, Scikit-learn, Pandas",
+        "XGBoost, SciPy, Seaborn", 
+        "OpenCV, Langchain"
+      ]
+    },
+    {
+      "name": "Big Data frameworks",
+      "level": "Master",
+      "icon": "fa-solid fa-hashtag",
+      "keywords": [
+        "Snowflake, Matillion, Apache Spark Ecosystem"
       ]
     }
   ]
