@@ -6,6 +6,7 @@ description: "How a physicist in 1982 taught a grid of Â±1 numbers to remember â
 tags: neural-networks machine-learning physics math
 categories: ai
 thumbnail: assets/img/hopfield_thumb.png
+og_image: assets/img/hopfield_thumb.png
 featured: true
 toc:
   sidebar: left
