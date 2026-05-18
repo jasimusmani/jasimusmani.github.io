@@ -8,12 +8,12 @@ middle_name:
 last_name: Usmani
 email: jasimusmani98@gmail.com
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+  Senior AI Engineer at Honda Canada. Building LLM-powered AI systems, agentic AI, and large-scale forecasting.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
   Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
-keywords: jekyll, jekyll-theme, academic-website, portfolio-website # add your own keywords or leave empty
+keywords: AI engineer, machine learning, LLM, RAG, agentic AI, XGBoost, computer vision, NLP
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: ⚛️ # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
@@ -106,7 +106,7 @@ wechat_qr: # filename of your wechat qr-code saved as an image (e.g., wechat-qr.
 whatsapp_number: # your WhatsApp number (full phone number in international format. Omit any zeroes, brackets, or dashes when adding the phone number in international format.)
 wikidata_id: # your wikidata id
 wikipedia_id: # your wikipedia id (Case sensitive)
-work_url: # work page URL
+work_url: https://www.honda.ca/ # work page URL
 x_username: # your X handle
 youtube_id: # your youtube channel id (youtube.com/@<youtube_id>)
 zotero_username: # your zotero username

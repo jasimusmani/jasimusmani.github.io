@@ -1,12 +1,12 @@
 {
   "basics": {
     "name": "Mohammad Jasim Usmani",
-    "label": "Data Scientist/Machine Learning Engineer",
+    "label": "Senior AI Engineer",
     "image": "",
     "email": "jasimusmani98@gmail.com",
     "phone": "(514) 516-1273",
     "url": "https://jasimusmani.github.io/",
-    "summary": "A Data Scientist and Machine Learning Researcher holding a Master’s degree, backed by over 3+ years of experience, specializing in the design and development of ML models/products in the NLP, time series and computer vision domain for various applications.",
+    "summary": "A Senior AI Engineer holding a Master’s degree, backed by over 4+ years of experience, specializing in the design and development of AI/ML systems in the NLP, time series and computer vision domain, with expertise in LLMs, RAG, Agentic AI and large-scale forecasting.",
     "location": {
       "address": "Ontario",
       "countryCode": "CA"
@@ -21,10 +21,23 @@
   },
   "work": [
     {
+      "name": "Honda Canada Inc.",
+      "position": "Senior AI Engineer",
+      "url": "https://www.honda.ca/",
+      "startDate": "2025-02",
+      "summary": "Building LLM-powered agentic AI systems, large-scale forecasting pipelines, and RAG solutions on IBM watsonx and AWS.",
+      "highlights": [
+        "Developing and deploying large-scale XGBoost forecasting models generating 120K daily predictions for business operations.",
+        "Building agentic AI systems and RAG pipelines leveraging LLMs on IBM watsonx platform.",
+        "Designing and implementing MCP (Model Context Protocol) integrations for enterprise AI workflows on AWS."
+      ]
+    },
+    {
       "name": "Precision Medicine Group",
       "position": "Data Scientist / Engineer",
       "url": "https://www.precisionmedicinegrp.com/",
       "startDate": "2024-02",
+      "endDate": "2025-01",
       "summary": "Working with LLMs to build RAG pipelines, ETL pipelines with Snowflake and Matillion",
       "highlights": ["Collaborated in building end-to-end ETL pipelines using AWS, Snowflake, and Matillion for ingesting data from APIs in type 2 SCD tables.",
                     "Collaborated with cross-functional teams to ingest data in SF and develop a streamlit app for holiday calendar for employees world wide, resulting in a 30% reduction in scheduling conflict.",
@@ -102,22 +115,32 @@
       ]
     },
     {
-      "name": "AI frameworks and Libraries",
+      "name": "AI Frameworks and Libraries",
       "level": "Master",
       "icon": "fa-solid fa-hashtag",
       "keywords": [
         "PyTorch, TensorFlow, Keras",
         "NumPy, Scikit-learn, Pandas",
-        "XGBoost, SciPy, Seaborn", 
-        "OpenCV, Langchain"
+        "XGBoost, SciPy, Seaborn",
+        "OpenCV, LangChain, LangGraph"
       ]
     },
     {
-      "name": "Big Data frameworks",
+      "name": "LLM & AI Platforms",
       "level": "Master",
       "icon": "fa-solid fa-hashtag",
       "keywords": [
-        "Snowflake, Matillion, Apache Spark Ecosystem"
+        "IBM watsonx, AWS Bedrock",
+        "RAG, Agentic AI, MCP"
+      ]
+    },
+    {
+      "name": "Big Data & Cloud",
+      "level": "Master",
+      "icon": "fa-solid fa-hashtag",
+      "keywords": [
+        "Snowflake, Matillion, Apache Spark Ecosystem",
+        "AWS (S3, Lambda, SageMaker)"
       ]
     }
   ]
