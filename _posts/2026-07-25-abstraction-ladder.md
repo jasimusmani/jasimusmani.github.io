@@ -11,17 +11,89 @@ featured: true
 toc:
   sidebar: left
 _styles: |
-  /* ---- The Abstraction Ladder: post-scoped styles ---- */
+  /* The Abstraction Ladder — post-scoped styles.
+     Every panel is theme-aware. The --al-c-* tokens are read at runtime by
+     abstraction-ladder.js so the canvases repaint with the page, and --al-glow
+     turns the phosphor bloom off in light mode where it would only smear. */
+
   .al {
+    /* light: an instrument printed on graph paper */
+    --al-bg: #f6f9f7;
+    --al-bg2: #ffffff;
+    --al-line: rgba(8, 107, 48, 0.2);
+    --al-shadow: 0 2px 18px rgba(13, 36, 25, 0.09);
+    --al-scan: 0;
+    --al-glow: 0;
+
+    --al-c-on: #086b30;
+    --al-c-off: #b3c9bc;
+    --al-c-amber: #8f5407;
+    --al-c-cyan: #0a6580;
+    --al-c-magenta: #8c1177;
+    --al-c-red: #ad2118;
+    --al-c-text: #44604f;
+    --al-c-bright: #0d2419;
+    --al-c-grid: rgba(8, 107, 48, 0.075);
+    --al-c-fillOn: rgba(8, 107, 48, 0.15);
+    --al-c-fillOff: rgba(8, 107, 48, 0.035);
+    --al-c-stroke: #8ba597;
+    --al-c-plot: rgba(8, 107, 48, 0.045);
+
+    --al-tk-kw: #7b2d90;
+    --al-tk-fn: #0a6580;
+    --al-tk-num: #8f5407;
+    --al-tk-com: #6b8578;
+    --al-tk-str: #086b30;
+    --al-tk-var: #ad2118;
+
+    --al-cat-theory: #0a6580;
+    --al-cat-device: #8f5407;
+    --al-cat-machine: #8c1177;
+    --al-cat-language: #086b30;
+    --al-cat-network: #2a4bb8;
+    --al-cat-learning: #ad2118;
+
+    --al-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  html[data-theme="dark"] .al {
+    /* dark: the oscilloscope */
     --al-bg: #080d0f;
     --al-bg2: #0c1315;
     --al-line: rgba(57, 255, 122, 0.16);
-    --al-on: #39ff7a;
-    --al-amber: #ffb347;
-    --al-cyan: #58e1ff;
-    --al-text: #9fbaab;
-    --al-bright: #d9ffe9;
-    --al-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --al-shadow:
+      0 6px 40px rgba(0, 0, 0, 0.45),
+      inset 0 0 90px rgba(57, 255, 122, 0.03);
+    --al-scan: 1;
+    --al-glow: 1;
+
+    --al-c-on: #39ff7a;
+    --al-c-off: #1f3a2c;
+    --al-c-amber: #ffb347;
+    --al-c-cyan: #58e1ff;
+    --al-c-magenta: #ff7ad9;
+    --al-c-red: #ff6b62;
+    --al-c-text: #9fbaab;
+    --al-c-bright: #d9ffe9;
+    --al-c-grid: rgba(57, 255, 122, 0.07);
+    --al-c-fillOn: rgba(57, 255, 122, 0.12);
+    --al-c-fillOff: rgba(57, 255, 122, 0.03);
+    --al-c-stroke: #35594a;
+    --al-c-plot: rgba(57, 255, 122, 0.05);
+
+    --al-tk-kw: #ff9ee0;
+    --al-tk-fn: #7fe8ff;
+    --al-tk-num: #ffc978;
+    --al-tk-com: #6f9083;
+    --al-tk-str: #7dffab;
+    --al-tk-var: #ff9d93;
+
+    --al-cat-theory: #58e1ff;
+    --al-cat-device: #ffb347;
+    --al-cat-machine: #ff7ad9;
+    --al-cat-language: #39ff7a;
+    --al-cat-network: #8fa8ff;
+    --al-cat-learning: #ff8b82;
   }
 
   /* Panels break out of the 930px column only when there is room to spare. */
@@ -46,24 +118,22 @@ _styles: |
     margin: 2.2rem 0;
     border-radius: 12px;
     overflow: hidden;
-    border: 1px solid rgba(57, 255, 122, 0.22);
+    border: 1px solid var(--al-line);
     background: var(--al-bg);
-    box-shadow:
-      0 6px 40px rgba(0, 0, 0, 0.45),
-      inset 0 0 90px rgba(57, 255, 122, 0.03);
-    color: var(--al-text);
+    box-shadow: var(--al-shadow);
+    color: var(--al-c-text);
     font-family: var(--al-mono);
     font-size: 0.86rem;
     line-height: 1.5;
     position: relative;
   }
-  .al::after {
+  html[data-theme="dark"] .al::after {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 3px);
     border-radius: 12px;
+    background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 3px);
   }
 
   .al-head {
@@ -71,7 +141,7 @@ _styles: |
     align-items: center;
     gap: 0.45rem;
     padding: 0.55rem 0.9rem;
-    background: rgba(57, 255, 122, 0.07);
+    background: var(--al-c-fillOff);
     border-bottom: 1px solid var(--al-line);
     font-size: 0.74rem;
     letter-spacing: 0.06em;
@@ -84,24 +154,24 @@ _styles: |
     flex: 0 0 auto;
   }
   .al-dot-r {
-    background: #ff5f56;
+    background: #e0554c;
   }
   .al-dot-y {
-    background: #ffbd2e;
+    background: #e0a52e;
   }
   .al-dot-g {
-    background: #27c93f;
+    background: #27a544;
   }
   .al-title {
     margin-left: 0.5rem;
-    color: var(--al-bright);
+    color: var(--al-c-bright);
     font-weight: 600;
   }
   .al-badge {
     margin-left: auto;
-    background: rgba(57, 255, 122, 0.14);
-    border: 1px solid rgba(57, 255, 122, 0.4);
-    color: var(--al-on);
+    background: var(--al-c-fillOn);
+    border: 1px solid var(--al-c-on);
+    color: var(--al-c-on);
     padding: 0.08rem 0.55rem;
     border-radius: 999px;
     font-size: 0.66rem;
@@ -109,6 +179,11 @@ _styles: |
   }
   .al-body {
     padding: 0.9rem;
+  }
+  .al-hr {
+    border: 0;
+    border-top: 1px dashed var(--al-line);
+    margin: 1.2rem 0 0.8rem;
   }
 
   /* --- bit switches --- */
@@ -124,8 +199,8 @@ _styles: |
     flex-wrap: wrap;
   }
   .al-bitlabel {
-    width: 1.9rem;
-    color: var(--al-text);
+    min-width: 1.9rem;
+    color: var(--al-c-text);
     font-size: 0.8rem;
     flex: 0 0 auto;
   }
@@ -133,39 +208,49 @@ _styles: |
     width: 2rem;
     height: 2rem;
     flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 5px;
-    border: 1px solid rgba(57, 255, 122, 0.28);
-    background: rgba(57, 255, 122, 0.04);
-    color: var(--al-text);
+    border: 1px solid var(--al-line);
+    background: var(--al-c-fillOff);
+    color: var(--al-c-text);
     font-family: var(--al-mono);
     font-size: 0.95rem;
     line-height: 1;
     cursor: pointer;
     padding: 0;
-    transition: background 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+    transition:
+      background 0.12s ease,
+      color 0.12s ease,
+      box-shadow 0.12s ease;
   }
   .al-bit:hover:not(:disabled) {
-    border-color: var(--al-on);
+    border-color: var(--al-c-on);
   }
   .al-bit:disabled {
-    opacity: 0.3;
+    opacity: 0.35;
     cursor: not-allowed;
   }
   .al-bit.is-on {
-    background: rgba(57, 255, 122, 0.2);
-    color: var(--al-on);
-    border-color: var(--al-on);
+    background: var(--al-c-fillOn);
+    color: var(--al-c-on);
+    border-color: var(--al-c-on);
+  }
+  html[data-theme="dark"] .al-bit.is-on {
     box-shadow: 0 0 12px rgba(57, 255, 122, 0.4);
   }
   .al-bit-c.is-on {
-    background: rgba(255, 179, 71, 0.2);
-    color: var(--al-amber);
-    border-color: var(--al-amber);
-    box-shadow: 0 0 12px rgba(255, 179, 71, 0.4);
+    color: var(--al-c-amber);
+    border-color: var(--al-c-amber);
+  }
+  .al-bit-ro {
+    cursor: default;
+    border-style: dashed;
   }
   .al-bitread {
     margin-left: 0.6rem;
-    color: var(--al-bright);
+    color: var(--al-c-bright);
     font-size: 0.85rem;
   }
   .al-cinrow {
@@ -183,7 +268,7 @@ _styles: |
     -webkit-overflow-scrolling: touch;
   }
   .al-canvas-wrap:focus-visible {
-    outline: 2px solid var(--al-on);
+    outline: 2px solid var(--al-c-on);
     outline-offset: 2px;
   }
   .al-canvas {
@@ -205,18 +290,19 @@ _styles: |
     font-size: 0.78rem;
     padding: 0.38rem 0.8rem;
     border-radius: 6px;
-    border: 1px solid rgba(57, 255, 122, 0.35);
-    background: rgba(57, 255, 122, 0.06);
-    color: var(--al-bright);
+    border: 1px solid var(--al-line);
+    background: var(--al-c-fillOff);
+    color: var(--al-c-bright);
     cursor: pointer;
     transition: background 0.12s ease;
   }
   .al-btn:hover {
-    background: rgba(57, 255, 122, 0.16);
+    background: var(--al-c-fillOn);
+    border-color: var(--al-c-on);
   }
   .al-btn-go {
-    border-color: var(--al-on);
-    color: var(--al-on);
+    border-color: var(--al-c-on);
+    color: var(--al-c-on);
   }
   .al-ctl {
     display: inline-flex;
@@ -224,15 +310,16 @@ _styles: |
     gap: 0.4rem;
     font-size: 0.76rem;
     margin: 0;
-    color: var(--al-text);
+    color: var(--al-c-text);
   }
   .al-ctl.al-grow {
-    flex: 1 1 240px;
+    flex: 1 1 220px;
   }
   .al-range {
-    accent-color: #39ff7a;
+    accent-color: var(--al-c-on);
     width: 8rem;
     max-width: 100%;
+    flex: 1 1 auto;
   }
   .al-range-wide {
     width: 100%;
@@ -240,7 +327,7 @@ _styles: |
     margin: 0.4rem 0;
   }
   .al-check {
-    accent-color: #39ff7a;
+    accent-color: var(--al-c-on);
   }
 
   /* --- stat readouts --- */
@@ -254,36 +341,37 @@ _styles: |
     border: 1px solid var(--al-line);
     border-radius: 7px;
     padding: 0.4rem 0.6rem;
-    background: rgba(255, 255, 255, 0.015);
+    background: var(--al-c-fillOff);
     min-width: 0;
   }
   .al-stat-k {
     display: block;
     font-size: 0.62rem;
     letter-spacing: 0.09em;
-    color: rgba(159, 186, 171, 0.75);
+    color: var(--al-c-text);
+    opacity: 0.85;
     text-transform: uppercase;
   }
   .al-stat-v {
     display: block;
-    color: var(--al-bright);
+    color: var(--al-c-bright);
     font-size: 0.85rem;
     overflow-wrap: anywhere;
   }
   .al-stat-v.al-big {
     font-size: 1.35rem;
     line-height: 1.25;
-    color: var(--al-on);
+    color: var(--al-c-on);
   }
   .al-stat-v.is-on {
-    color: var(--al-on);
+    color: var(--al-c-on);
   }
   .al-stat.is-alert {
-    border-color: rgba(255, 179, 71, 0.6);
-    background: rgba(255, 179, 71, 0.07);
+    border-color: var(--al-c-amber);
+    background: var(--al-c-fillOn);
   }
   .al-stat.is-alert .al-stat-v {
-    color: var(--al-amber);
+    color: var(--al-c-amber);
   }
 
   /* --- tables --- */
@@ -292,13 +380,13 @@ _styles: |
     border-collapse: collapse;
     margin: 0.6rem 0 0;
     font-size: 0.78rem;
-    color: var(--al-text);
+    color: var(--al-c-text);
   }
   .al-tt-cap {
     caption-side: top;
     text-align: left;
     font-size: 0.68rem;
-    color: rgba(159, 186, 171, 0.8);
+    color: var(--al-c-text);
     padding-bottom: 0.35rem;
   }
   .al-tt th,
@@ -308,37 +396,50 @@ _styles: |
     text-align: center;
   }
   .al-tt th {
-    color: var(--al-bright);
-    background: rgba(57, 255, 122, 0.05);
+    color: var(--al-c-bright);
+    background: var(--al-c-fillOff);
     font-weight: 500;
   }
   .al-tt tr.is-active td {
-    background: rgba(57, 255, 122, 0.16);
-    color: var(--al-on);
+    background: var(--al-c-fillOn);
+    color: var(--al-c-on);
   }
 
-  /* --- text bits --- */
+  /* --- text --- */
   .al-live,
   .al-note,
-  .al-cap {
+  .al-cap,
+  .al-below {
     margin: 0.55rem 0 0;
     font-size: 0.76rem;
-    color: rgba(159, 186, 171, 0.9);
+    color: var(--al-c-text);
     line-height: 1.55;
   }
   .al-live {
-    color: var(--al-bright);
-    border-left: 2px solid rgba(57, 255, 122, 0.45);
+    color: var(--al-c-bright);
+    border-left: 2px solid var(--al-c-on);
     padding-left: 0.6rem;
+  }
+  .al-note.is-err {
+    color: var(--al-c-red);
+  }
+  .al-note.is-ok {
+    color: var(--al-c-on);
+  }
+  .al-below-k {
+    color: var(--al-c-on);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.62rem;
   }
   .al-phase {
     margin: 0 0 0.6rem;
     font-size: 0.8rem;
-    color: var(--al-cyan);
+    color: var(--al-c-cyan);
     letter-spacing: 0.04em;
   }
   .al-phase.is-halt {
-    color: #ff5f56;
+    color: var(--al-c-red);
   }
 
   /* --- tabs --- */
@@ -353,18 +454,52 @@ _styles: |
     font-size: 0.74rem;
     padding: 0.3rem 0.7rem;
     border-radius: 999px;
-    border: 1px solid rgba(57, 255, 122, 0.25);
+    border: 1px solid var(--al-line);
     background: transparent;
-    color: var(--al-text);
+    color: var(--al-c-text);
     cursor: pointer;
   }
+  .al-tab:hover {
+    border-color: var(--al-c-on);
+  }
   .al-tab.is-on {
-    background: rgba(57, 255, 122, 0.16);
-    color: var(--al-on);
-    border-color: var(--al-on);
+    background: var(--al-c-fillOn);
+    color: var(--al-c-on);
+    border-color: var(--al-c-on);
   }
 
-  /* --- CPU RAM grid --- */
+  /* --- fab progress --- */
+  .al-progress {
+    height: 3px;
+    background: var(--al-c-fillOff);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .al-progress-fill {
+    height: 100%;
+    width: 0;
+    background: var(--al-c-on);
+  }
+
+  /* --- CPU --- */
+  .al-src {
+    width: 100%;
+    font-family: var(--al-mono);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    padding: 0.7rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--al-line);
+    background: var(--al-bg2);
+    color: var(--al-c-bright);
+    resize: vertical;
+    min-height: 8rem;
+    tab-size: 4;
+  }
+  .al-src:focus-visible {
+    outline: 2px solid var(--al-c-on);
+    outline-offset: 1px;
+  }
   .al-ram {
     display: grid;
     grid-template-columns: repeat(8, minmax(0, 1fr));
@@ -376,28 +511,37 @@ _styles: |
     border-radius: 5px;
     padding: 0.28rem 0.1rem;
     text-align: center;
-    background: rgba(255, 255, 255, 0.015);
+    background: var(--al-c-fillOff);
+    min-width: 0;
   }
   .al-ram-a {
     display: block;
     font-size: 0.58rem;
-    color: rgba(159, 186, 171, 0.6);
+    color: var(--al-c-text);
+    opacity: 0.7;
   }
   .al-ram-v {
     display: block;
     font-size: 0.9rem;
-    color: var(--al-bright);
+    color: var(--al-c-bright);
+  }
+  .al-ram-l {
+    display: block;
+    font-size: 0.52rem;
+    color: var(--al-c-cyan);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 0.8em;
   }
   .al-ram-c.is-mar {
-    border-color: var(--al-amber);
-    background: rgba(255, 179, 71, 0.12);
+    border-color: var(--al-c-amber);
+    background: var(--al-c-fillOn);
   }
   .al-ram-c.is-pc {
-    border-color: var(--al-cyan);
-    box-shadow: 0 0 10px rgba(88, 225, 255, 0.35);
+    border-color: var(--al-c-cyan);
+    outline: 1px solid var(--al-c-cyan);
   }
-
-  /* --- disassembly rows --- */
   .al-dis {
     margin-top: 0.6rem;
     display: grid;
@@ -414,16 +558,29 @@ _styles: |
     font-size: 0.64rem;
     letter-spacing: 0.09em;
     text-transform: uppercase;
-    color: rgba(159, 186, 171, 0.7);
+    color: var(--al-c-text);
+    opacity: 0.8;
   }
   .al-dis-v {
     background: none;
-    color: var(--al-bright);
+    color: var(--al-c-bright);
     font-size: 0.85rem;
     padding: 0;
   }
   .al-dis-v.is-asm {
-    color: var(--al-on);
+    color: var(--al-c-on);
+  }
+  .al-out {
+    margin: 0.3rem 0 0;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--al-line);
+    border-radius: 6px;
+    background: var(--al-bg2);
+    color: var(--al-c-on);
+    font-family: var(--al-mono);
+    font-size: 0.8rem;
+    max-height: 7rem;
+    overflow: auto;
   }
 
   /* --- ladder --- */
@@ -440,26 +597,30 @@ _styles: |
     gap: 0.05rem;
     padding: 0.3rem 0.6rem;
     border-radius: 6px;
-    border: 1px solid rgba(57, 255, 122, 0.22);
+    border: 1px solid var(--al-line);
     background: transparent;
     cursor: pointer;
     font-family: var(--al-mono);
     text-align: left;
   }
+  .al-rung:hover {
+    border-color: var(--al-c-on);
+  }
   .al-rung-y {
     font-size: 0.6rem;
-    color: rgba(159, 186, 171, 0.65);
+    color: var(--al-c-text);
+    opacity: 0.8;
   }
   .al-rung-n {
     font-size: 0.76rem;
-    color: var(--al-text);
+    color: var(--al-c-text);
   }
   .al-rung.is-on {
-    border-color: var(--al-on);
-    background: rgba(57, 255, 122, 0.14);
+    border-color: var(--al-c-on);
+    background: var(--al-c-fillOn);
   }
   .al-rung.is-on .al-rung-n {
-    color: var(--al-on);
+    color: var(--al-c-on);
   }
   .al-code {
     background: var(--al-bg2);
@@ -471,19 +632,69 @@ _styles: |
     font-family: var(--al-mono);
     font-size: 0.78rem;
     line-height: 1.6;
-    color: var(--al-bright);
+    color: var(--al-c-bright);
     white-space: pre;
     min-height: 9.5rem;
+  }
+  .al-code:focus-visible {
+    outline: 2px solid var(--al-c-on);
+    outline-offset: 1px;
+  }
+  .al-tk-kw {
+    color: var(--al-tk-kw);
+  }
+  .al-tk-fn {
+    color: var(--al-tk-fn);
+  }
+  .al-tk-num {
+    color: var(--al-tk-num);
+  }
+  .al-tk-com {
+    color: var(--al-tk-com);
+    font-style: italic;
+  }
+  .al-tk-str {
+    color: var(--al-tk-str);
+  }
+  .al-tk-var {
+    color: var(--al-tk-var);
   }
 
   /* --- timeline --- */
   .al-tl-wrap {
-    padding: 0.9rem 0.2rem 0.3rem;
+    position: relative;
+    height: 82px;
+    margin: 0.4rem 0 0.2rem;
+  }
+  .al-eras {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 0;
+    height: 22px;
+  }
+  .al-era {
+    position: absolute;
+    top: 0;
+    height: 22px;
+    border-left: 1px solid var(--al-line);
+    background: var(--al-c-fillOff);
+    overflow: hidden;
+  }
+  .al-era-t {
+    display: block;
+    font-size: 0.58rem;
+    padding: 0.25rem 0 0 4px;
+    color: var(--al-c-text);
+    white-space: nowrap;
   }
   .al-tl-track {
-    position: relative;
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 46px;
     height: 2px;
-    background: rgba(57, 255, 122, 0.18);
+    background: var(--al-line);
   }
   .al-tl-dot {
     position: absolute;
@@ -493,43 +704,131 @@ _styles: |
     margin: -4.5px 0 0 -4.5px;
     padding: 0;
     border-radius: 50%;
-    border: 1px solid rgba(57, 255, 122, 0.45);
+    border: 1px solid currentColor;
     background: var(--al-bg);
+    color: var(--al-c-stroke);
     cursor: pointer;
   }
   .al-tl-dot.is-past {
-    background: rgba(57, 255, 122, 0.4);
+    background: currentColor;
+    opacity: 0.55;
   }
   .al-tl-dot.is-on {
-    background: var(--al-on);
-    box-shadow: 0 0 12px var(--al-on);
-    transform: scale(1.5);
-    border-color: var(--al-on);
+    background: currentColor;
+    transform: scale(1.6);
+    opacity: 1;
+  }
+  html[data-theme="dark"] .al-tl-dot.is-on {
+    box-shadow: 0 0 10px currentColor;
+  }
+  .al-ticks {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 58px;
+    height: 16px;
+  }
+  .al-tick {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 0.58rem;
+    color: var(--al-c-text);
+    opacity: 0.8;
   }
   .al-tl-card {
     border: 1px solid var(--al-line);
     border-radius: 8px;
     padding: 0.7rem 0.9rem;
-    background: rgba(255, 255, 255, 0.015);
+    background: var(--al-c-fillOff);
     margin-top: 0.4rem;
   }
   .al-tl-year {
     font-size: 1.6rem;
-    color: var(--al-on);
+    color: var(--al-c-on);
     line-height: 1.1;
   }
   .al-tl-who {
     font-size: 0.9rem;
-    color: var(--al-bright);
+    color: var(--al-c-bright);
     margin-bottom: 0.3rem;
   }
   .al-tl-what {
     margin: 0;
     font-size: 0.82rem;
-    color: var(--al-text);
+    color: var(--al-c-text);
+  }
+  .al-tl-meta {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+  .al-pill {
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    color: var(--al-c-text);
   }
 
-  /* --- prose helpers --- */
+  .al-cat-theory {
+    color: var(--al-cat-theory);
+  }
+  .al-cat-device {
+    color: var(--al-cat-device);
+  }
+  .al-cat-machine {
+    color: var(--al-cat-machine);
+  }
+  .al-cat-language {
+    color: var(--al-cat-language);
+  }
+  .al-cat-network {
+    color: var(--al-cat-network);
+  }
+  .al-cat-learning {
+    color: var(--al-cat-learning);
+  }
+  .al-tab.al-cat-theory.is-on {
+    color: var(--al-cat-theory);
+  }
+  .al-tab.al-cat-device.is-on {
+    color: var(--al-cat-device);
+  }
+  .al-tab.al-cat-machine.is-on {
+    color: var(--al-cat-machine);
+  }
+  .al-tab.al-cat-language.is-on {
+    color: var(--al-cat-language);
+  }
+  .al-tab.al-cat-network.is-on {
+    color: var(--al-cat-network);
+  }
+  .al-tab.al-cat-learning.is-on {
+    color: var(--al-cat-learning);
+  }
+  .al-tab.al-cat-theory.is-on,
+  .al-tab.al-cat-device.is-on,
+  .al-tab.al-cat-machine.is-on,
+  .al-tab.al-cat-language.is-on,
+  .al-tab.al-cat-network.is-on,
+  .al-tab.al-cat-learning.is-on {
+    background: var(--al-c-fillOff);
+    border-color: currentColor;
+  }
+  .al-tab.al-cat-theory:not(.is-on),
+  .al-tab.al-cat-device:not(.is-on),
+  .al-tab.al-cat-machine:not(.is-on),
+  .al-tab.al-cat-language:not(.is-on),
+  .al-tab.al-cat-network:not(.is-on),
+  .al-tab.al-cat-learning:not(.is-on) {
+    color: var(--al-c-text);
+    opacity: 0.6;
+  }
+
+  /* --- prose helpers, these follow the site theme directly --- */
   .al-hist {
     border-left: 3px solid var(--global-theme-color);
     background: var(--global-code-bg-color);
@@ -579,7 +878,7 @@ _styles: |
       font-size: 0.85rem;
     }
     .al-bitlabel {
-      width: 1.4rem;
+      min-width: 1.4rem;
     }
     .al-ram {
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -587,10 +886,13 @@ _styles: |
     .al-dis-k {
       width: 4rem;
     }
+    .al-era-t {
+      font-size: 0.5rem;
+    }
   }
 ---
 
-> Right now, somewhere under your fingertips, roughly a hundred billion switches made of doped sand are flipping on and off to render this sentence. You did not think about a single one of them. That gap — between the sentence you read and the switches that drew it — is the largest engineering artefact humans have ever built. It has eleven floors, it took about a hundred and seventy years, and almost nobody has seen the whole thing at once.
+> Right now, somewhere under your fingertips, roughly a hundred billion switches made of doped sand are flipping on and off to render this sentence. You did not think about a single one of them. That gap — between the sentence you read and the switches that drew it — is the largest engineering artefact humans have ever built. It has thirteen or so floors, it took about a hundred and seventy years, and almost nobody has seen the whole thing at once.
 >
 > This post is a walk from the bottom floor to the top. Every rung has something you can operate.
 
@@ -608,7 +910,7 @@ Start below the bottom, at the one layer that is not a human invention: rock.
 
 Silicon is the second most abundant element in the Earth's crust, about 28% by mass, and essentially all of it is locked up as silica — SiO₂, which is to say quartz, which is to say sand. It is worth roughly nothing. The refined product of the process below sells for something like a hundred million dollars per tonne of finished die, which makes it, by a wide margin, the most extreme value-add in the history of manufacturing.
 
-The path from one to the other has six steps.
+The path from one to the other has six steps. Step through them below, or let it play; each stage carries the numbers that actually matter.
 
 <div class="al al-bleed" data-al-module="fab"></div>
 
@@ -650,7 +952,7 @@ $$
 I_D \;\propto\; \left(V_{gs} - V_{th}\right)^2 \qquad \text{for } V_{gs} > V_{th}, \qquad I_D \approx 0 \text{ otherwise}
 $$
 
-Drag the gate voltage below and watch the channel form.
+Drag the gate voltage below and watch the channel form. The plot beside it is the real characteristic: a family of curves, one per gate voltage, with the dashed parabola marking where the device stops behaving like a resistor and starts behaving like a current source.
 
 <div class="al al-bleed" data-al-module="mosfet"></div>
 
@@ -658,7 +960,11 @@ Two things deserve to be stared at.
 
 First: **the gate is not connected to anything.** It controls a current it never touches, through an insulator, purely with a field. That is why the input of a MOSFET costs almost no power to hold — which is why you can chain billions of them together without the whole thing melting.
 
-Second: **that squared term is a curve, and we are about to pretend it is a cliff.** The transistor is an analogue device with a continuous response. The entire digital world is built on the decision to use only the two ends of that curve and treat everything in between as a transient error to be raced through as fast as possible. Every abstraction above this one inherits that decision.
+Second: **that squared term is a curve, and we are about to pretend it is a cliff.** The transistor is an analogue device with a continuous response. The entire digital world is built on the decision to use only the two ends of that curve and treat everything in between as a transient error to be raced through as fast as possible.
+
+Switch the panel to **Inverter** and you can watch that decision being manufactured. Two transistors — one n-type pulling down, one p-type pulling up — are wired between the supply and ground with their gates tied together. The voltage transfer characteristic that appears is not a straight line. Through the middle band it is nearly vertical, which is to say the gain is far greater than one, which is to say **a small error on the input comes out smaller than it went in**. That is the whole trick. Noise gets squashed rather than accumulated, and because it gets squashed at every single gate, you can chain a billion of them and still have a 1 that means 1 at the far end.
+
+Every abstraction above this one is standing on that cliff.
 
 <div class="al-hist" markdown="1">
 #### 1947 · Murray Hill, New Jersey
@@ -685,6 +991,8 @@ $$
 And that turns out to be enough. NAND is **functionally complete**: every Boolean function that exists can be built from NAND gates alone. Not "most". Every one. The proof is constructive and short, and you can run it below — pick a target gate and watch it get rebuilt out of nothing but NANDs.
 
 <div class="al al-bleed" data-al-module="nand"></div>
+
+Two things in that panel are worth doing. Press **Propagate** and watch the signal arrive one level at a time — the output is not merely late, it is actively _wrong_ until the last level settles, which is the entire reason clocks exist. Then switch to **Transistor level** to see what a NAND actually is: two p-type devices in parallel pulling the output up, two n-type devices in series pulling it down, wired so that exactly one network conducts at a time. That duality is why CMOS burns almost no power when it is not switching.
 
 The constructions are worth reading off:
 
@@ -785,21 +1093,29 @@ The fix is almost embarrassingly simple. Take two NAND gates and feed each one's
 
 The loop has two stable configurations. If the top gate outputs 1, that 1 goes into the bottom gate and forces it to output 0, which goes back into the top gate and holds it at 1. The state is self-consistent — it holds itself up by its own bootstraps. Flip it and the mirror image is equally stable. Two stable states, no external input required: one bit, stored, indefinitely, for as long as the power is on.
 
-Add two more NANDs as a gate — an _enable_ line — and you get a **gated D latch**: when enable is high, Q follows D; when enable is low, the loop clamps shut and holds whatever it had.
+Add two more NANDs as a gate — an _enable_ line — and you get a **gated D latch**: when enable is high, Q follows D; when enable is low, the loop clamps shut and holds whatever it had. Add two more again and you get the real thing: an **edge-triggered D flip-flop**, which samples only at the instant the clock rises.
+
+All three are below. Switch between them.
 
 <div class="al al-bleed" data-al-module="latch"></div>
 
-Let the clock run and watch the waveform strip. Then stop the clock with enable low and hammer the D button. Nothing happens. That "nothing happens" is the entire point — it is the first time in this whole stack that the machine ignores the present in favour of the past.
+Let the clock run and watch the waveform strip. Then stop the clock and hammer the D button. Nothing happens. That "nothing happens" is the entire point — it is the first time in this whole stack that the machine ignores the present in favour of the past.
+
+Three things to try:
+
+**Find the forbidden state.** On the **SR latch**, pull both S̄ and R̄ low at once. Q and Q̄ both go high — they are supposed to be opposites, and now they are not. The panel labels it FORBIDDEN because that is exactly what it is: an input combination the abstraction "this stores one bit" does not cover.
+
+**See the difference between a latch and a flip-flop.** On the **gated D latch**, hold EN high and change D. Q follows immediately, glitches and all. On the **edge D flip-flop**, hold CLK high and change D as much as you like. Nothing moves until the next rising edge. That distinction is invisible from one layer up, where the abstraction is simply "a register holds a word between clock ticks" — and it becomes extremely visible when a design violates setup or hold time and the flip-flop goes _metastable_, sitting between 0 and 1 for an unbounded period while it makes up its mind.
+
+**Watch the settling counter.** It reports how many gate delays the loop took to reach a consistent state. It is not always the same number, and in the forbidden case it never settles at all.
 
 <div class="al-hist" markdown="1">
-#### A caveat, because abstractions leak
+#### The promise, and its conditions
 
-What is drawn above is _level-triggered_: while enable is high, Q tracks D continuously, so a glitch on D during the enable window gets stored. Real registers use **edge-triggered** flip-flops — typically two latches in a primary–secondary arrangement, six NANDs — which sample only at the instant the clock transitions.
-
-That distinction is invisible from one layer up, where the abstraction is simply "a register holds a word between clock ticks". It becomes extremely visible when your design violates setup or hold time and the flip-flop goes _metastable_, sitting between 0 and 1 for an unbounded period while it makes up its mind. Layer 03 promised you clean bits. Layer 04 is where that promise is actually made, and it is conditional on timing.
+Layer 03 promised you clean bits. Layer 04 is where that promise is actually _made_ — and it is conditional on timing, on input combinations staying inside the legal set, and on the loop being given long enough to settle. None of those conditions appear in the interface. They appear in the datasheet, and then in the bug report.
 </div>
 
-Wire eight latches side by side sharing one enable line and you have a **register** — an 8-bit word you can hold. Wire a few thousand into an addressable array and you have RAM. Put a register on each input of the adder from the last section and one on its output, drive the enable lines from a common clock, and you have something new: a machine that does one step of arithmetic per tick and remembers the result. Add a counter that walks through memory deciding _which_ step to do, and you have a computer.
+Eight of those flip-flops side by side, sharing one clock line, is a **register** — an 8-bit word you can hold. That is at the bottom of the panel above: set the D bits, and nothing happens to Q until you press Clock. Wire a few thousand of them into an addressable array and you have RAM. Put a register on each input of the adder from the last section and one on its output, drive them all from a common clock, and you have something new: a machine that does one step of arithmetic per tick and remembers the result. Add a counter that walks through memory deciding _which_ step to do, and you have a computer.
 
 ---
 
@@ -820,11 +1136,13 @@ The machinery required is a loop with four beats:
 3. **Execute** — let the ALU, the registers and memory do whatever the opcode says.
 4. **Increment** — advance the program counter, unless the instruction just changed it.
 
-Below is a complete machine that does exactly this. Sixteen bytes of RAM, one accumulator, nine opcodes. It is preloaded with the same addition the adder above performs — 75 + 54 — so you can watch a number you toggled by hand come out the other end of an instruction stream.
+Below is a complete machine that does exactly this. Sixteen bytes of RAM, one accumulator, nine opcodes — and a working assembler, so the source in the box is really being translated into the bytes in the grid. Edit it and press **Assemble**; it will tell you off for an unknown mnemonic or an address that does not fit in four bits.
+
+It starts on the same addition the adder above performs — 75 + 54 — so you can watch a number you toggled by hand come out the other end of an instruction stream. The other two programs are worth running as well. **Count down** is a loop: the machine changes its own program counter based on a flag. **Multiply 6 × 7** is the one to sit with, because this machine has no multiply instruction — multiplication is a loop over addition, and you are watching the exact moment where "the hardware cannot do this" becomes "the software will do it anyway".
 
 <div class="al al-bleed" data-al-module="cpu"></div>
 
-Press **Step** repeatedly and watch the phases. The instruction at address 0 is `1E`. In binary that is `0001 1110`: the top four bits are the opcode `0001` = LDA, the bottom four are the operand `1110` = address 14. Address 14 holds `4B`, which is 75.
+Press **Micro-step** repeatedly and watch the four phases light up the data path. The instruction at address 0 is `1E`. In binary that is `0001 1110`: the top four bits are the opcode `0001` = LDA, the bottom four are the operand `1110` = address 14. Address 14 holds `4B`, which is 75.
 
 Then look at what is in memory: bytes `1E 2F 4D E0 F0` are _instructions_, bytes at addresses D, E and F are _data_, and the machine has absolutely no way of telling them apart. Nothing marks one as code. The only thing that makes `4B` "the number 75" rather than "an STA instruction" is that the program counter never points at it. Point the PC there — a bad jump, a corrupted return address — and the machine will happily execute your data. Every control-flow hijacking attack ever written lives in that gap.
 
@@ -852,7 +1170,7 @@ assembly   LDA E
 
 All three are the same byte. Only the third is something a human can read at eleven o'clock at night without making a mistake.
 
-The obvious move — obvious in retrospect, radical at the time — is to write the third form and have the _machine_ produce the first. That program is an assembler, and it is the first time in this stack that a tool exists whose only purpose is the comfort of the person using it.
+The obvious move — obvious in retrospect, radical at the time — is to write the third form and have the _machine_ produce the first. That program is an assembler, and it is the first time in this stack that a tool exists whose only purpose is the comfort of the person using it. The panel in the previous section contains a real one: `LDA x` in the text box becomes the byte `1E` in the memory grid, and the label `x` becomes the number 14, because a two-pass assembler worked out where `x` ended up.
 
 The idea is generally credited to **Kathleen Booth**, who around 1947 designed an assembly language and wrote its assembler for the ARC machine at Birkbeck College, and who co-authored the first book on programming machines of this kind. At Cambridge in 1949, David Wheeler wrote EDSAC's "Initial Orders" — a bootstrap loader that read symbolic instructions from paper tape and converted them as it went — and in the process invented the **subroutine**, still known for years afterwards as the "Wheeler jump".
 
